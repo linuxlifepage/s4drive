@@ -89,8 +89,19 @@ npm run test           # Vitest / Playwright
 
 ```bash
 # Текущая: Фаза 1 — S3 Compatibility Check
+# MinIO локально (Docker):
+sudo docker run -d --rm --name s4drive-minio -p 9000:9000 \
+  -e MINIO_ROOT_USER=minioadmin \
+  -e MINIO_ROOT_PASSWORD=*** \
+  -v /tmp/s4drive-minio-data:/data \
+  minio/minio server /data
+sudo docker exec s4drive-minio mc alias set local \
+  http://127.0.0.1:9000 minioadmin minioadmin
+sudo docker exec s4drive-minio mc mb local/s4drive-test
+
+# S4Drive compatibility check (ожидается Level 2: Safe Sync, 14/14):
 cargo run -p s4drive-cli -- check \
-  --endpoint https://minio:9000 \
+  --endpoint http://127.0.0.1:9000 \
   --bucket s4drive-test \
   --access-key minioadmin --secret minioadmin
 
