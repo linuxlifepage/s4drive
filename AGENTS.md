@@ -39,6 +39,12 @@ cargo test             # Все тесты (unit + integration)
 cargo check            # Компиляция без ошибок
 ```
 
+### Rust Code Style — жёсткие правила
+- **NO `.unwrap()` в production-коде** — только в тестах (`#[cfg(test)] mod`).
+  - В production: `?` (Try), `.context()/with_context(|| ...)`, `.unwrap_or_else()`, `.expect("message")` с человеко-читаемым сообщением.
+  - Единственное исключение: `.expect("infallible: ...")` на гарантированно-успешных операциях (типа взятие Mutex lock) — с комментарием почему.
+- **NO `unsafe`** — zero unsafe code.
+
 ### Frontend (Solid.js / Svelte, Phase 6+)
 ```bash
 npm run lint           # ESLint + TypeScript strict
