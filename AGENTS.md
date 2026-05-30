@@ -88,25 +88,19 @@ npm run test           # Vitest / Playwright
 ## Важные команды по фазам
 
 ```bash
-# Текущая: Фаза 1 — S3 Compatibility Check
-# MinIO локально (Docker):
-sudo docker run -d --rm --name s4drive-minio -p 9000:9000 \
-  -e MINIO_ROOT_USER=minioadmin \
-  -e MINIO_ROOT_PASSWORD=*** \
-  -v /tmp/s4drive-minio-data:/data \
-  minio/minio server /data
-sudo docker exec s4drive-minio mc alias set local \
-  http://127.0.0.1:9000 minioadmin minioadmin
-sudo docker exec s4drive-minio mc mb local/s4drive-test
+# Текущая: Фаза 2 — Rust Core Skeleton ✅
+# S3 adapter, Config, DB, Metadata types, Credential store,
+# File watcher (notify), Transfer queue (SQLite), Sync engine (tokio loop),
+# Diagnostics, Graceful shutdown, Bucket initialization (.s4drive/)
 
-# S4Drive compatibility check (ожидается Level 2: Safe Sync, 14/14):
-cargo run -p s4drive-cli -- check \
+# Фаза 3 — Metadata Protocol v1
+## CLI: инициализация бакета
+cargo run -p s4drive-cli -- init-bucket \
   --endpoint http://127.0.0.1:9000 \
   --bucket s4drive-test \
   --access-key minioadmin --secret minioadmin
 
-# Фаза 3 — Metadata protocol
-cargo test -p s4drive-core metadata
+## Тесты метадаты
 cargo run -p s4drive-cli -- init-bucket \
   --endpoint ... --bucket ...
 
