@@ -132,3 +132,10 @@ cargo run -p s4drive-cli -- --help
 - `git add -A && git commit -m "Phase N: ..."` + push
 - Branch: `main` (release), feature branches для крупных фич
 - Коммиты подписанные (в идеале)
+
+## Release workflow
+- GitHub Release создается **только через CI** (`.github/workflows/build-release.yml`).
+- Не создавать релизы вручную через локальные GitHub API/CLI вызовы. Локально допустимо только создать/запушить git tag.
+- Release tag format: `vX.Y.Z`, версия должна совпадать с `Cargo.toml` workspace version и `src-tauri/tauri.conf.json`.
+- CI обязан сгенерировать release notes и прикрепить все desktop/CLI артефакты к GitHub Release.
+- Если нужно повторить релиз для уже существующего тега, запускать `Build & Release` через GitHub Actions `workflow_dispatch` с этим тегом.
