@@ -126,6 +126,7 @@ cargo run -p s4drive-cli -- --help
 - [docs/spec/sync-semantics.md](docs/spec/sync-semantics.md)
 - [docs/spec/conflict-policy.md](docs/spec/conflict-policy.md)
 - [docs/spec/tech-constitution.md](docs/spec/tech-constitution.md)
+- [docs/disaster-recovery.md](docs/disaster-recovery.md)
 
 ## Git workflow
 - Частые коммиты (1 на фазу/подфазу)
